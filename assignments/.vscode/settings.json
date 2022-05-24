@@ -1,8 +1,8 @@
 {
     "r.bracketedPaste": true,
     "r.rpath.linux": "/usr/bin/R",
-    "r.rterm.linux": "/home/surtich/.local/bin/radian",
-    //"r.rterm.linux": "/home/surtich/anaconda3/bin/radian",
+    //"r.rterm.linux": "/home/surtich/.local/bin/radian",
+    "r.rterm.linux": "/home/surtich/anaconda3/bin/radian",
     "r.rterm.windows": "C:\\Users\\surtich\\anaconda3\\Scripts\\radian.exe",
     "r.rpath.windows": "C:\\Program Files\\R\\R-4.1.3\\bin\\i386\\Rgui.exe"
 }

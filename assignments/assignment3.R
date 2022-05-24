@@ -11,7 +11,7 @@ set_assignment(assignment_path)
 # To check your code/functions, just run
 mark_my_assignment()
 
-#1
+# 1
 
 library(aaltobda)
 data("windshieldy1")
@@ -20,9 +20,9 @@ head(windshieldy1)
 windshieldy_test <- c(13.357, 14.928, 14.896, 14.820)
 
 
-#1.a)
+# 1.a)
 
-mu_point_est <- function (data = windshieldy_test) {
+mu_point_est <- function(data = windshieldy_test) {
   mean(data)
 }
 
@@ -30,7 +30,7 @@ mu_point_est(data = windshieldy_test)
 
 mu_interval <- function(data = windshieldy_test, prob = 0.95) {
   n <- length(data)
-  q <- qt(c((1-prob)/2, prob + (1-prob)/2), n - 1)
+  q <- qt(c((1 - prob) / 2, prob + (1 - prob) / 2), n - 1)
 
   mean(data) + q * sd(data) / sqrt(n)
 }
@@ -48,9 +48,9 @@ mu_pred_point_est(data = windshieldy_test)
 
 mu_pred_interval <- function(data = windshieldy_test, prob = 0.95) {
   n <- length(data)
-  q <- qt(c((1-prob)/2, prob + (1-prob)/2), n - 1)
+  q <- qt(c((1 - prob) / 2, prob + (1 - prob) / 2), n - 1)
 
-  mean(data) + q * sd(data) * sqrt(1 + 1/n)  
+  mean(data) + q * sd(data) * sqrt(1 + 1 / n)
 }
 
 
@@ -59,10 +59,24 @@ mu_pred_interval(data = windshieldy_test, prob = 0.95)
 # 2
 
 set.seed(4711)
+g0_n <- 674
+g0_y <- 39
+
+g1_n <- 680
+g1_y <- 22
+
+
 p0 <- rbeta(100000, 5, 95)
 p1 <- rbeta(100000, 10, 90)
 
-posterior_odds_ratio_point_est(p0 = p0, p1 = p1)
+posterior_odds_ratio_point_est <- function(p0 = p0, p1 = p1) {
+  (g0_y + 5) / (5 + g0_y + 95 + g0_n - g0_y)
+  log_lik_0 <- log(dbinom(g0_y, g0_n, p0)) + log(p0)
+  dbinom(g0_y, g0_n, p0) * p0 # / sum(dbinom(g0_y, g0_n, p0) * p0)
+  # log_lik_0
+}
+
+kk <- posterior_odds_ratio_point_est(p0 = p0, p1 = p1)
 ## [1] 2.676
 posterior_odds_ratio_interval(p0 = p0, p1 = p1, prob = 0.9)
 ## [1] 0.875 6.059
