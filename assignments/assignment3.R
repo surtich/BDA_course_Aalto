@@ -70,13 +70,21 @@ p0 <- rbeta(100000, 5, 95)
 p1 <- rbeta(100000, 10, 90)
 
 posterior_odds_ratio_point_est <- function(p0 = p0, p1 = p1) {
-  (g0_y + 5) / (5 + g0_y + 95 + g0_n - g0_y)
-  log_lik_0 <- log(dbinom(g0_y, g0_n, p0)) + log(p0)
-  dbinom(g0_y, g0_n, p0) * p0 # / sum(dbinom(g0_y, g0_n, p0) * p0)
-  # log_lik_0
+  # post0 <- rbeta(100000, 5 + g0_y, 95 + g0_n - g0_y)
+  post0 <- sample(p0, size = 100000, prob = dbinom(g0_y, g0_n, p0), replace = T)
+
+  # post1 <- rbeta(100000, 10 + g1_y, 90 + g1_n - g1_y)
+  post1 <- sample(p1, size = 100000, prob = dbinom(g1_y, g1_n, p1), replace = T)
+
+  odds0 <- post0 / (1 - post0)
+  odds1 <- post1 / (1 - post1)
+
+  or <- odds1 / odds0
+
+  mean(or)
 }
 
-kk <- posterior_odds_ratio_point_est(p0 = p0, p1 = p1)
+posterior_odds_ratio_point_est(p0 = p0, p1 = p1)
 ## [1] 2.676
 posterior_odds_ratio_interval(p0 = p0, p1 = p1, prob = 0.9)
 ## [1] 0.875 6.059
